@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
+$conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
 $barkod = mysqli_real_escape_string($conn, $_GET["barkod"]);
 
 $ilaclar_sql = "SELECT id, ad, doz FROM ilaclar WHERE barkod='$barkod'";
