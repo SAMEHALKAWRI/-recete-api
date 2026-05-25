@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
@@ -10,10 +12,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 $conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
-$barkod = mysqli_real_escape_string($conn, $_GET["barkod"]);
+
+if (!$conn) {
+    echo json_encode(["error" => "DB connection failed: " . mysqli_connect_error()]);
+    exit();
+}
+
+$barkod = mysqli_real_escape_string($conn, $_GET["barkod"] ?? "");
 
 $ilaclar_sql = "SELECT id, ad, doz FROM ilaclar WHERE barkod='$barkod'";
 $ilaclar_result = mysqli_query($conn, $ilaclar_sql);
+
+if (!$ilaclar_result) {
+    echo json_encode(["error" => mysqli_error($conn)]);
+    exit();
+}
+
 $ilaclar = [];
 while ($row = mysqli_fetch_assoc($ilaclar_result)) {
     $ilaclar[] = $row;
@@ -36,9 +50,14 @@ $stok_sql = "SELECT s.ilac_id, s.miktar, i.ad as ilac_adi,
 
 $stok_result = mysqli_query($conn, $stok_sql);
 
+if (!$stok_result) {
+    echo json_encode(["error" => mysqli_error($conn)]);
+    exit();
+}
+
 $eczane_ilac_map = [];
 $eczane_info = [];
-$eczane_ilac_names = []; // ← اسماء العلاجات لكل صيدلية
+$eczane_ilac_names = [];
 
 while ($row = mysqli_fetch_assoc($stok_result)) {
     $eid = $row['eczane_id'];
@@ -57,7 +76,7 @@ while ($row = mysqli_fetch_assoc($stok_result)) {
         ];
     }
     $eczane_ilac_map[$eid][] = $iid;
-    $eczane_ilac_names[$eid][] = $row['ilac_adi']; // ← أضف اسم العلاج
+    $eczane_ilac_names[$eid][] = $row['ilac_adi'];
 }
 
 $tam_eslesme = [];
@@ -69,7 +88,7 @@ foreach ($eczane_ilac_map as $eid => $iids) {
     $toplam = count($ilaclar);
     $info['bulunan_ilac'] = $bulunan;
     $info['toplam_ilac'] = $toplam;
-    $info['mevcut_ilaclar'] = array_unique($eczane_ilac_names[$eid]); // ← أسماء العلاجات
+    $info['mevcut_ilaclar'] = array_values(array_unique($eczane_ilac_names[$eid]));
 
     if ($bulunan >= $toplam) {
         $info['tip'] = 'tam';
