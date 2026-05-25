@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
+$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
 $data = json_decode(file_get_contents("php://input"), true);
 
 $ad        = mysqli_real_escape_string($conn, $data["ad"]);

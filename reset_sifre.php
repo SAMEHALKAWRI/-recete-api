@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-$conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
+$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
 
 $data = json_decode(file_get_contents("php://input"), true);
 $kullanici = mysqli_real_escape_string($conn, $data["kullanici_adi"]);

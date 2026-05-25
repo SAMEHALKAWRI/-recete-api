@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
+$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
 
 if (!$conn) {
     echo json_encode(["error" => "DB connection failed: " . mysqli_connect_error()]);
