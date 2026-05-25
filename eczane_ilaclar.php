@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-$conn = mysqli_connect("mysql-1048c291-samehgamilalkaw-8c23.c.aivencloud.com", "avnadmin", "AVNS_kEbMKil4toRW7irfnHO", "pharmacy_system1");
+$conn = mysqli_connect("sql7.freesqldatabase.com", "sql7827892", "e5UCW2qCwC", "sql7827892");
 $eczane_id = mysqli_real_escape_string($conn, $_GET["eczane_id"]);
 
 $sql = "SELECT i.id, i.ad, i.barkod, i.doz,
