@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
-$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
+$conn = mysqli_connect("mysql-1048c291-samehgamilalkaw-8c23.c.aivencloud.com", "avnadmin", "AVNS_kEbMKil4toRW7irfnHO", "pharmacy_system1");
 
 $result = mysqli_query($conn, "
     SELECT i.id, i.ad, i.barkod, i.doz,

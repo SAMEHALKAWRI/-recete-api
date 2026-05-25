@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$conn = mysqli_connect("localhost", "root", "", "pharmacy_system1");
+$conn = mysqli_connect("mysql-1048c291-samehgamilalkaw-8c23.c.aivencloud.com", "avnadmin", "AVNS_kEbMKil4toRW7irfnHO", "pharmacy_system1");
 
 $data = json_decode(file_get_contents("php://input"), true);
 $kullanici = mysqli_real_escape_string($conn, $data["kullanici_adi"]);
